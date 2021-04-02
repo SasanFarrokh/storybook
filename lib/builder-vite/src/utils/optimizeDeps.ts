@@ -15,7 +15,7 @@ export const optimizeDeps = {
     'doctrine',
     'fast-deep-equal',
     '@mdx-js/react',
-    // 'vue/dist/vue.esm-bundler.js',
+    'vue',
     'react',
     'react-dom',
     'ansi-to-html',

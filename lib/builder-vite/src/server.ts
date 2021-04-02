@@ -14,7 +14,7 @@ export async function createViteServer({ configDir }: LoadOptions): Promise<Vite
     },
     resolve: {
       alias: {
-        vue: 'vue/dist/vue.esm-bundler.js',
+        'vue$': 'vue/dist/vue.esm-bundler.js',
       },
     },
     optimizeDeps,
