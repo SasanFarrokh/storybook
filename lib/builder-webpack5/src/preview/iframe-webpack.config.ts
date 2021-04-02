@@ -106,10 +106,14 @@ export default async ({
     virtualModuleMapping[storiesFilename] = interpolate(storyTemplate, { frameworkImportPath })
       // Make sure we also replace quotes for this one
       .replace("'{{stories}}'", stories.map(toRequireContextString).join(','));
+
+    console.log(stories.map(toRequireContextString).join(','))
   }
 
   const shouldCheckTs = useBaseTsSupport(framework) && typescriptOptions.check;
   const tsCheckOptions = typescriptOptions.checkOptions || {};
+
+  console.log(entries)
 
   return {
     name: 'preview',

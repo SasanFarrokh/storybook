@@ -94,7 +94,8 @@
   },
   "browserslist": "defaults",
   "resolutions": {
-    "serialize-javascript": "^3.1.0"
+    "serialize-javascript": "^3.1.0",
+    "has-symbols": "^1.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",

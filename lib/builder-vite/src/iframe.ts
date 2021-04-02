@@ -1,28 +1,39 @@
 import ejs from 'ejs';
 import * as fs from 'fs';
+import * as path from 'path';
 import { RequestHandler } from 'express';
 import { LoadOptions, StorybookConfigOptions } from '@storybook/core-common';
 
-export const iframeMiddleware = ({
+export const iframeMiddleware = async ({
   presets,
   framework,
   packageJson,
-}: StorybookConfigOptions & LoadOptions): RequestHandler => async (req, res, next) => {
+}: StorybookConfigOptions & LoadOptions): Promise<RequestHandler> => {
   const headHtmlSnippet = await presets.apply<string>('previewHeadTemplate');
   const bodyHtmlSnippet = await presets.apply<string>('previewBodyTemplate');
-  const ejsTemplate = await presets.apply<string>('previewMainTemplate');
   const logLevel = await presets.apply('logLevel', undefined);
   const frameworkOptions = await presets.apply(`${framework}Options`, {});
 
-  const template = ejs.compile((await fs.promises.readFile(ejsTemplate)).toString());
+  const template = ejs.compile(
+    (await fs.promises.readFile(path.resolve(__dirname, './templates/index.ejs'))).toString()
+  );
 
-  if (req.url.match(/^\/iframe.html($|\?)/)) {
+  return (req, res, next) => {
+    if (!req.url.match(/^\/iframe.html($|\?)/)) {
+      next();
+      return;
+    }
     res.send(
       template({
         options: {},
         files: {
           css: [],
-          js: [],
+          js: [
+            {
+              path: '/vite-app.js',
+              module: true,
+            },
+          ],
         },
         headHtmlSnippet,
         bodyHtmlSnippet,
@@ -33,7 +44,5 @@ export const iframeMiddleware = ({
         },
       })
     );
-    return;
-  }
-  next();
+  };
 };

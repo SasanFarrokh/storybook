@@ -16,6 +16,6 @@ export function LinkTo(): null {
 
 export { linkTo, hrefTo, withLinks, navigate } from './preview';
 
-if (module && module.hot && module.hot.decline) {
+if (typeof module !== 'undefined' && module.hot && module.hot.decline) {
   module.hot.decline();
 }
