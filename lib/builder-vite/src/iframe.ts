@@ -3,12 +3,13 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { RequestHandler } from 'express';
 import { LoadOptions, StorybookConfigOptions } from '@storybook/core-common';
+import { ViteDevServer } from "vite";
 
 export const iframeMiddleware = async ({
   presets,
   framework,
-  packageJson,
-}: StorybookConfigOptions & LoadOptions): Promise<RequestHandler> => {
+  packageJson
+}: StorybookConfigOptions & LoadOptions, server: ViteDevServer): Promise<RequestHandler> => {
   const headHtmlSnippet = await presets.apply<string>('previewHeadTemplate');
   const bodyHtmlSnippet = await presets.apply<string>('previewBodyTemplate');
   const logLevel = await presets.apply('logLevel', undefined);
@@ -18,13 +19,13 @@ export const iframeMiddleware = async ({
     (await fs.promises.readFile(path.resolve(__dirname, './templates/index.ejs'))).toString()
   );
 
-  return (req, res, next) => {
+  return async (req, res, next) => {
     if (!req.url.match(/^\/iframe.html($|\?)/)) {
       next();
       return;
     }
     res.send(
-      template({
+      await server.transformIndexHtml('/iframe.html', template({
         options: {},
         files: {
           css: [],
@@ -43,6 +44,6 @@ export const iframeMiddleware = async ({
           FRAMEWORK_OPTIONS: frameworkOptions,
         },
       })
-    );
+    ));
   };
 };
