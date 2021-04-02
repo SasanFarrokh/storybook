@@ -144,6 +144,6 @@ export const withKnobs = makeDecorator({
 
 export * from './shared';
 
-if (module && module.hot && module.hot.decline) {
+if (typeof module !== 'undefined' && module.hot && module.hot.decline) {
   module.hot.decline();
 }

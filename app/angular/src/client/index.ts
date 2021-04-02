@@ -15,6 +15,6 @@ export type { StoryFnAngularReturnType as IStory } from './preview/types';
 
 export { moduleMetadata, componentWrapperDecorator } from './preview/decorators';
 
-if (module && module.hot && module.hot.decline) {
+if (typeof module !== 'undefined' && module.hot && module.hot.decline) {
   module.hot.decline();
 }

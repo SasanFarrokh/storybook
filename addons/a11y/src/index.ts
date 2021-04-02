@@ -5,7 +5,7 @@ import dedent from 'ts-dedent';
 export { PARAM_KEY } from './constants';
 export * from './highlight';
 
-if (module && module.hot && module.hot.decline) {
+if (typeof module !== 'undefined' && module.hot && module.hot.decline) {
   module.hot.decline();
 }
 

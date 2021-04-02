@@ -26,6 +26,6 @@ export const withQuery = makeDecorator({
   },
 });
 
-if (module && module.hot && module.hot.decline) {
+if (typeof module !== 'undefined' && module.hot && module.hot.decline) {
   module.hot.decline();
 }

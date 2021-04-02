@@ -63,7 +63,7 @@ export const viteAppMiddleware = async (
       ${configTemplate}
     })
     
-    configure(() => ${importArray('story', storyEntries.length)}, undefined, false);
+    configure(() => ${importArray('story', storyEntries.length)}.filter(el => el.default), undefined, false);
     `.trim()
     );
   };

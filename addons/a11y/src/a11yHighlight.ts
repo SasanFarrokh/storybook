@@ -5,7 +5,7 @@ import { EVENTS, HIGHLIGHT_STYLE_ID } from './constants';
 
 import { highlightStyle } from './highlight';
 
-if (module && module.hot && module.hot.decline) {
+if (typeof module !== 'undefined' && module.hot && module.hot.decline) {
   module.hot.decline();
 }
 

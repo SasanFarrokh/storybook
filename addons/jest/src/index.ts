@@ -61,6 +61,6 @@ export const withTests = (userOptions: { results: any; filesExt?: string }) => {
   };
 };
 
-if (module && module.hot && module.hot.decline) {
+if (typeof module !== 'undefined' && module.hot && module.hot.decline) {
   module.hot.decline();
 }

@@ -4,7 +4,7 @@ import addons from '@storybook/addons';
 import { EVENTS } from './constants';
 import { A11yParameters } from './params';
 
-if (module && module.hot && module.hot.decline) {
+if (typeof module !== 'undefined' && module.hot && module.hot.decline) {
   module.hot.decline();
 }
 

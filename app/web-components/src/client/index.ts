@@ -19,6 +19,6 @@ export {
 export * from './preview/types-6-0';
 
 // TODO: disable HMR and do full page loads because of customElements.define
-if (module && module.hot && module.hot.decline) {
+if (typeof module !== 'undefined' && module.hot && module.hot.decline) {
   module.hot.decline();
 }
