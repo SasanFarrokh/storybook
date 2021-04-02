@@ -18,16 +18,8 @@ export async function createViteServer({ configDir }: LoadOptions): Promise<Vite
       },
     },
     optimizeDeps,
-    plugins: [
-      mockCoreJs(),
-      vue(),
-    ],
+    plugins: [mockCoreJs(), vue()],
   });
 
-  server.middlewares.use((req, res, next) => {
-    if (req.url.startsWith('/core-js')) {
-    }
-    next();
-  });
   return server;
 }
