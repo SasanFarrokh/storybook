@@ -91,7 +91,6 @@ export default function start(
   }
 
   const configure = loadCsf({ clientApi, storyStore, configApi });
-
   return {
     configure,
     clientApi,
