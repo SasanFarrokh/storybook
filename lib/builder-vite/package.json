@@ -45,14 +45,21 @@
     "@vitejs/plugin-vue": "^1.2.1",
     "ejs": "^3.1.6",
     "glob-promise": "^4.1.0",
-    "sirv": "^1.0.11",
-    "vite": "^2.1.5",
-    "vue": "^3.0.11"
+    "vite": "^2.1.5"
   },
   "devDependencies": {
-    "@types/ejs": "^3.0.6"
+    "@types/ejs": "^3.0.6",
+    "vue": "^3.0.11"
+  },
+  "peerDependencies": {
+    "vue": ">=2.6 || ^3.0.0",
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
   },
   "peerDependenciesMeta": {
+    "vue": {
+      "optional": true
+    },
     "typescript": {
       "optional": true
     }
