@@ -13,10 +13,10 @@ export const getConfig = () => ({});
 
 export const build: ViteBuilder['build'] = async ({ options }) => {};
 
-export const start: ViteBuilder['start'] = async ({ startTime, options, router }) => {
-  const server = await createViteServer(options);
+export const start: ViteBuilder['start'] = async ({ startTime, options, router, server: devServer }) => {
+  const server = await createViteServer(options, devServer);
 
-  router.use(await iframeMiddleware(options));
+  router.use(await iframeMiddleware(options, server));
   router.use(await viteAppMiddleware(options));
 
   router.use((req, res, next) => server.middlewares.handle(req, res, next));
