@@ -3,15 +3,14 @@ import {
   loadPreviewOrConfigFile,
   StorybookConfigOptions,
 } from '@storybook/core-common';
-import { RequestHandler } from 'express';
 import glob from 'glob-promise';
 import * as path from 'path';
 import * as fs from 'fs';
 import { storybookPaths } from './utils/storybookPaths';
 
-export const viteAppMiddleware = async (
+export const generateViteAppCode = async (
   options: StorybookConfigOptions & LoadOptions
-): Promise<RequestHandler> => {
+): Promise<string> => {
   const { presets, configDir, framework } = options;
 
   const clientApi = storybookPaths['@storybook/client-api'];
@@ -43,17 +42,10 @@ export const viteAppMiddleware = async (
       .map((_, i) => `${name}_${i}`)
       .join(',')}]`;
 
-  return (req, res, next) => {
-    if (!req.url.match(/^\/vite-app.js($|\?)/)) {
-      next();
-      return;
-    }
-    res.setHeader('Content-Type', 'application/javascript');
-    res.status(200).send(
-      `
+  const code = `
     import '${frameworkEntry}'
-    import { addDecorator, addParameters, addLoader, addArgTypesEnhancer } from '${clientApi}';
-    import { logger } from '${clientLogger}';
+    import { addDecorator, addParameters, addLoader, addArgTypesEnhancer } from '/@fs${clientApi}';
+    import { logger } from '/@fs${clientLogger}';
     ${absoluteFilesToImport(configEntries, 'config')}
     import { configure } from '${frameworkEntry}';
     ${absoluteFilesToImport(storyEntries, 'story')}
@@ -64,7 +56,6 @@ export const viteAppMiddleware = async (
     })
     
     configure(() => ${importArray('story', storyEntries.length)}.filter(el => el.default), undefined, false);
-    `.trim()
-    );
-  };
+    `.trim();
+  return code;
 };
