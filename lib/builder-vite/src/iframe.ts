@@ -25,7 +25,7 @@ export const iframeMiddleware = async ({
       return;
     }
     res.send(
-      await server.transformIndexHtml('/iframe.html', template({
+      await server.transformIndexHtml(req.url, template({
         options: {},
         files: {
           css: [],
